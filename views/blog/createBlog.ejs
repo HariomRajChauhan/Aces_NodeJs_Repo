@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Blog</title>
+
+
+    <style>
+        *body {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        nav {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            min-height: 10vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+
+        }
+
+        nav ul li {
+            display: inline;
+            padding: 10px;
+
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        nav ul li a:hover {
+            color: black;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 50%;
+            margin: 0 auto;
+        }
+
+        form div {
+            margin: 10px 0;
+        }
+
+        form div label {
+            display: block;
+        }
+
+        form div label input {
+            width: 100%;
+            padding: 10px;
+            height: 20px;
+        }
+
+        form div label textarea {
+            width: 100%;
+            padding: 10px;
+        }
+
+        form div label input[type="file"] {
+            width: auto;
+            padding: 10px;
+        }
+
+        form button {
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/createBlog">Create Blog</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <div>
+        <h1>Create Blog</h1>
+        <form action="/createBlog" method="post">
+            <div>
+                <label for="title">Title</label>
+                <br>
+                <input type="text" name="title" id="title">
+            </div>
+            <div>
+                <label for="description">Description</label>
+                <br>
+                <textarea name="description" id="description" cols="30" rows="10"></textarea>
+            </div>
+
+            <div>
+                <label for="subtitle">
+                    Subtitle
+                </label>
+                <input type="text" name="subtitle" id="subtitle">
+            </div>
+
+            <div>
+                <label for="image">
+                    <input type="file" name="image" id="image">
+                </label>
+            </div>
+
+
+            <button type="submit">Create Blog</button>
+        </form>
+</body>
+
+</html>

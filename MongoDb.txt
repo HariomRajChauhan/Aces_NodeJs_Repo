@@ -1,0 +1,44 @@
+npm install mongodb
+
+
+mongodb+srv://chauhanhariomraj7:techhrch123@cluster0.fswzwtx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+
+manxe : mongoose
+ORM(sql) :-        ODM(mongo)
+
+
+users.find()
+.findAll()
+
+
+users.create({
+	username : "hari",
+	password : "12345678",
+
+})
+
+case :
+camelCase == camelCase
+hariom -- hariOm
+i love nepal -- iLoveNepal
+
+
+snake case:
+hariom -- hari_om
+i love nepal -- i_love_nepal
+
+
+pascal case:
+hariom --- HariOm
+i love nepal -- ILoveNepal
+
+
+hariom  : hari-om
+
+
+nework request
+database query
+
+
+
