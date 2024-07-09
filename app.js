@@ -1,6 +1,7 @@
 const express = require("express");
 const connectToDb = require("./database/databaseConnection");
 const Blog = require("./model/blogModel");
+const { storage, multer } = require("./middleware/multerConfig");
 const app = express();
 
 connectToDb();
@@ -8,6 +9,7 @@ connectToDb();
 
 app.use(express.json());
 
+const upload = multer({storage:storage})
 
 // yo lai use gareko vane express le json data lai parse garxa ani req.body ma halxa
 app.set("view engine","ejs");
@@ -32,7 +34,7 @@ app.get("/createblog",(req,res)=>{
 })
 
 
-app.post("/createblog",async (req,res)=>{
+app.post("/createblog",upload.single('image'),async (req,res)=>{
     // console.log(req.body);
     // const title = req.body.title;
     // const description = req.body.description;
@@ -40,13 +42,17 @@ app.post("/createblog",async (req,res)=>{
 
 
     const {title,description,subtitle} = req.body;
+    const file = req.file.filename;
+    console.log(file);
 
     console.log(title,description,subtitle);
+
 
     await Blog.create({
         title,
         description,
         subtitle,
+        image : file,
     })
     console.log("Blog created successfully");
     res.redirect("/createblog");
