@@ -22,6 +22,11 @@ app.get("/about",(req,res)=>{
 }
 )
 
+app.get("/",async (req,res)=>{
+    const blogs = await Blog.find();
+    console.log(blogs);
+    res.render("./blog/home.ejs",{blogs});
+})
 
 app.get("/contact",(req,res)=>{
     const address = "Aces workshop";
@@ -58,7 +63,7 @@ app.post("/createblog",upload.single('image'),async (req,res)=>{
     res.redirect("/createblog");
 })
 
-
+app.use(express.static("./storage"))
 
 app.listen(3000,()=>{
     console.log("Server is running on port 3000");

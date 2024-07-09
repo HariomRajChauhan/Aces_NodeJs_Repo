@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+
+    <style>
+        /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Main Content Styles */
+main {
+    padding: 20px;
+    text-align: center;
+}
+
+.card {
+    background-color: #fff;
+    margin: 20px auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card .image img {
+    max-width: 100%;
+    height: auto;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <nav>
+                <ul>
+                    <!-- <h2>Hariom</h2> -->
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/blogs">Blogs</a></li>
+                    <li><a href="/blogs/create">Create Blog</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+       <% blogs.forEach((blogs) => { %>
+            <div class="card">
+                <div class="image">
+                    <img src="<%-blogs.image%>" alt="profile image">
+                </div>
+                <h1><%-blogs.title%></h1>
+                <p><%-blogs.description%></p>
+            </div>
+        <% }) %>
+    </main>
+</body>
+</html>
