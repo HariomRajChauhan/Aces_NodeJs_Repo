@@ -16,7 +16,7 @@
         }
 
         header {
-            padding:0 20px;
+            padding: 0 20px;
             background-color: #333;
             color: #fff;
             padding: 20px 0;
@@ -45,7 +45,7 @@
             padding: 0 20px;
         }
 
-        .main {
+        main {
             padding: 20px;
             width: 100%;
             max-width: 800px;
@@ -60,7 +60,7 @@
             /* Add subtle shadow */
         }
 
-        .main>div:first-child h1 {
+        main>div:first-child h1 {
             margin-bottom: 30px;
             font-size: 2em;
             color: #10bde9;
@@ -112,7 +112,7 @@
         button[type="submit"] {
             padding: 10px 20px;
             background-color: #10bde9;
-            color: #2d1717;
+            color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -143,38 +143,31 @@
         </div>
     </header>
 
-    <div class="main">
+    <main>
         <div>
-        <h1>Create Blog</h1>
+            <h1>Edit Blog Post</h1>
         </div>
-        <form action="/createBlog" method="post" enctype="multipart/form-data">
+        <form action="/edit/<%- blog._id %>" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title">Title</label>
-                <br>
-                <input type="text" name="title" id="title">
+                <input type="text" name="title" id="title" value="<%- blog.title %>">
+            </div>
+            <div class="form-group">
+                <label for="subtitle">Subtitle</label>
+                <input type="text" name="subtitle" id="subtitle" value="<%- blog.subtitle %>">
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
-                <br>
-                <textarea name="description" id="description" cols="30" rows="10"></textarea>
+                <textarea name="description" id="description"><%- blog.description %></textarea>
             </div>
-
             <div class="form-group">
-                <label for="subtitle">
-                    Subtitle
-                </label>
-                <input type="text" name="subtitle" id="subtitle">
+                <label for="image">Image</label>
+                <input type="file" name="image" id="image">
             </div>
-
-            <div class="form-group">
-                <label for="image">
-                    <input type="file" name="image" id="image">
-                </label>
-            </div>
-
-
-            <button type="submit">Create Blog</button>
+            <button type="submit">Update Blog</button>
         </form>
+    </main>
+
 </body>
 
 </html>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,80 +8,110 @@
 
     <style>
         /* General Styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
 
-header {
-    background-color: #333;
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
-}
+        header {
+            padding: 0 20px;
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            font-weight: 800;
+            font-size: 1rem;
+        }
 
-nav ul {
-    list-style: none;
-    padding: 0;
-}
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
 
-nav ul li {
-    display: inline;
-    margin: 0 10px;
-}
+        nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
 
-nav ul li a {
-    color: #fff;
-    text-decoration: none;
-}
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
 
-/* Main Content Styles */
-main {
-    padding: 20px;
-    text-align: center;
-}
+        .naviagtion {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            gap: 30px;
+        }
 
-.card {
-    background-color: #fff;
-    margin: 20px auto;
-    padding: 20px;
-    width: 90%;
-    max-width: 600px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
+        .main {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            /* Correctly creates three columns of equal width */
+            grid-gap: 30px;
+            /* Adds gap between grid items */
+            background-color: #fff;
+            margin: 20px auto;
+            padding: 20px;
+            width: 100%;
+            max-width: 100%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
 
-.card .image img {
-    max-width: 100%;
-    height: auto;
-}
+        /* Main Content Styles */
+        .card {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            /* Creates two columns of equal width */
+            grid-gap: 20px;
+            /* Adds gap between grid items */
+            background-color: #fff;
+            margin: 20px auto;
+            padding: 10px;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card .image img {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 </head>
+
 <body>
     <header>
-        <div>
+        <div class="naviagtion">
+            <div>
+                <h2>Hariom</h2>
+            </div>
             <nav>
                 <ul>
-                    <!-- <h2>Hariom</h2> -->
                     <li><a href="/">Home</a></li>
-                    <li><a href="/blogs">Blogs</a></li>
-                    <li><a href="/blogs/create">Create Blog</a></li>
+                    <li><a href="/">Blogs</a></li>
+                    <li><a href="createBlog">Create Blog</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <main>
-       <% blogs.forEach((blogs) => { %>
+    <div class="main">
+        <% blogs.forEach((blogs)=> { %>
             <div class="card">
                 <div class="image">
                     <img src="<%-blogs.image%>" alt="profile image">
                 </div>
                 <h1><%-blogs.title%></h1>
-                <p><%-blogs.description%></p>
+                <p style="display: block;"><%-blogs.subtitle%></p>
+                <p><a href="/blog/<%- blogs._id %>">See More...</a></p>
             </div>
-        <% }) %>
-    </main>
+            <% }) %>
+    </div>
 </body>
+
 </html>

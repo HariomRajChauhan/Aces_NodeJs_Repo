@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Blog</title>
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            padding: 0 20px;
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline;
+            margin: 0 10px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .naviagtion {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        main {
+            padding: 20px;
+            width: 80%;
+            margin: 30px auto;
+            text-align: center;
+            background-color: #051c36;
+            color: #fff;
+        }
+
+        main>div:first-child h1 {
+            margin-bottom: 30px;
+            font-size: 2em;
+            color: #10bde9;
+        }
+        img{
+            width: 100%;
+            height: 100%;
+            
+        }
+        .blogs {
+            display: flex;
+            align-items: center;
+            justify-content:center;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            margin: 30px;
+            border: 3px solid #eee;
+            border-radius: 10px;
+            padding: 30px;
+
+        }
+
+        .blogs div:first-child img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+
+        .blogs div h2 {
+            margin: 0;
+            color: #06121f;
+            background-color: #ccbecf;
+        }
+
+        .blogs div p {
+            margin: 5px 0;
+            color: #666;
+        }
+        .btn{
+            display: block;
+            margin: 10px;
+            text-align: center;
+            font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+            
+        }
+        button{
+            margin: 0 20px;
+            padding: 10px 20px;
+            background-color: #10bde9;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0a8da0;
+            /* Darker shade on hover */
+        }
+        .btn a{
+            text-decoration: none;
+            color: #3b2424;
+            font-weight: 700;
+        }
+        
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="naviagtion">
+            <div>
+                <h2>Hariom</h2>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/">Blogs</a></li>
+                    <li><a href="createBlog">Create Blog</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+
+    <main>
+        <div>
+            <h1>Your Blogs</h1>
+        </div>
+
+        <div class="blogs">
+            <div>
+                <img src="http://localhost:3000/<%-blog.image%>" alt="Blog_Image">
+            </div>
+            <div>
+                <h2><%-blog.title%></h2>
+                <p><%-blog.subtitle%></p>
+                <p><%-blog.description%></p>
+            </div>
+
+        </div>
+
+        <div class="btn">
+            <button>
+                <a href="/edit/<%-blog._id%>">Edit</a>
+            </button>
+            <button>
+                <a href="/delete/<%-blog._id%>">Delete Me</a>
+            </button>
+        </div>
+    </main>
+
+</body>
+
+</html>
