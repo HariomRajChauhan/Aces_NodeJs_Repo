@@ -1,8 +1,18 @@
 const express = require("express");
+
+const bcrypt = require("bcrypt");
 const connectToDb = require("./database/databaseConnection");
 const Blog = require("./model/blogModel");
 const { storage, multer } = require("./middleware/multerConfig");
 const app = express();
+
+// User model lai call gareko
+
+const User = require("./model/userModel");
+
+
+
+
 
 connectToDb();
 
@@ -70,7 +80,7 @@ app.post("/edit/:id", upload.single('image'), async (req, res) => {
     // Update the blog post with the new data
     await Blog.findByIdAndUpdate(id, updateData);
     // Redirect to the homepage or to the updated blog post
-    res.redirect("/");
+    res.redirect("/blog/" + id);
 });
 
 
@@ -109,6 +119,51 @@ app.post("/createblog",upload.single('image'),async (req,res)=>{
     console.log("Blog created successfully");
     res.redirect("/createblog");
 })
+
+
+// User ko route haru
+
+app.get("/register",(req,res)=>{
+    res.render("./blog/register.ejs");
+})
+
+app.post("/register",async (req,res)=>{
+    const {username,email,password} = req.body;
+    await User.create({
+        username,
+        email,
+        password : await bcrypt.hashSync(password,12),
+    })
+    res.redirect("/login");
+})
+
+app.get("/login",(req,res)=>{
+    res.render("./blog/login.ejs");
+})
+
+app.post("/login",async (req,res)=>{
+    const {email,password} = req.body;
+    const user = await User.findOne({email:email});
+    if(!user){
+        res.send("invalid email");
+    }
+    else{
+        // password match garne
+        const isMatch = await bcrypt.compare(password,user.password);
+        if(!isMatch){
+            res.send("invalid password");
+        
+        }
+        else{
+            // res.send("Login success");
+            res.redirect("/");
+        }
+    }
+})
+
+
+
+
 
 app.use(express.static("./storage"))
 
