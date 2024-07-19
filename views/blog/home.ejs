@@ -95,11 +95,18 @@
                     <li><a href="/">Home</a></li>
                     <li><a href="/">Blogs</a></li>
                     <li><a href="createBlog">Create Blog</a></li>
+                    <li><a href="/logout" style="background-color: red; color: white; padding: 8px;">Logout</a></li>
                 </ul>
             </nav>
         </div>
     </header>
+    <div class="searchbar">
+        <form action="/" method="post">
 
+            <input type="search" name="search" placeholder="Search Blogs">
+            <input type="submit"/ >
+        </form>
+    </div>
     <div class="main">
         <% blogs.forEach((blogs)=> { %>
             <div class="card">

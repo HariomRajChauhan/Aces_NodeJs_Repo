@@ -1,16 +1,19 @@
+require("dotenv").config()
+
 const express = require("express");
 const bcrypt = require("bcrypt");
 const connectToDb = require("./database/databaseConnection");
 const Blog = require("./model/blogModel");
 const { storage, multer } = require("./middleware/multerConfig");
+const jwt = require("jsonwebtoken")
 const cookieParser = require("cookie-parser");
-const cookieSession = require("cookie-session");
 
 const app = express();
 
 // User model lai call gareko
 
 const User = require("./model/userModel");
+const isAuthenticated = require("./middleware/isAuthenticated");
 
 // Database connection
 connectToDb();
@@ -19,13 +22,6 @@ connectToDb();
 app.use(express.json());
 app.use(cookieParser());
 
-app.use(cookieSession({
-    name: 'session',
-    keys: ['key1', 'key2'], // These are the keys used to sign and verify the cookie values. Use complex, unique keys for production.
-    maxAge: 24 * 60 * 60 * 1000 // 24 hours cookie expiration
-}));
-
-
 // multer ko storage lai use gareko
 
 const upload = multer({ storage: storage })
@@ -33,27 +29,6 @@ const upload = multer({ storage: storage })
 // yo lai use gareko vane express le json data lai parse garxa ani req.body ma halxa
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
-
-app.get('/set-cookie', (req, res) => {
-    // Setting a session value
-    req.session.userId = '12345';
-    res.send('Encrypted user ID has been set in a session cookie');
-});
-
-app.get('/get-cookie', (req, res) => {
-    // Accessing a session value
-    const userId = req.session.userId;
-    res.send(`Encrypted User ID from session cookie: ${userId}`);
-});
-
-
-app.get('/clear-cookie', (req, res) => {
-    // Clearing all session data
-    req.session = null;
-    res.send('Session (and encrypted cookie) cleared');
-  });
-
-
 
 app.get("/home", (req, res) => {
     res.render("home.ejs");
@@ -71,22 +46,28 @@ app.get("/", async (req, res) => {
     res.render("./blog/home.ejs", { blogs });
 })
 
+app.post("/", async (req, res) => {
+    const query = req.body.search;
+    const blogs = await Blog.find({ title: { $regex: query, $options: "i" } });
+    res.render("./blog/home.ejs", { blogs });
+})
 
 app.get("/blog/:id", async (req, res) => {
     const id = req.params.id;
-    const blog = await Blog.findById(id);
+    const blog = await Blog.findById(id).populate("author");
+    console.log(blog)
     res.render("./blog/blogs.ejs", { blog });
 })
 
 
-app.get("/delete/:id", async (req, res) => {
+app.get("/delete/:id",isAuthenticated, async (req, res) => {
     const id = req.params.id;
     await Blog.findByIdAndDelete(id);
     res.redirect("/");
 })
 
 // Route to display the edit form with the current blog data
-app.get("/edit/:id", async (req, res) => {
+app.get("/edit/:id", isAuthenticated, async (req, res) => {
     const id = req.params.id;
     // Correctly fetch the blog post to edit
     const blog = await Blog.findById(id);
@@ -95,7 +76,7 @@ app.get("/edit/:id", async (req, res) => {
 });
 
 // Route to handle the submission of the edit form
-app.post("/edit/:id", upload.single('image'), async (req, res) => {
+app.post("/edit/:id", isAuthenticated, upload.single('image'), async (req, res) => {
     const id = req.params.id;
     const { title, description, subtitle } = req.body;
     let updateData = {
@@ -103,7 +84,7 @@ app.post("/edit/:id", upload.single('image'), async (req, res) => {
         description,
         subtitle,
     };
-
+    
     // If a new file is uploaded, add it to the update data
     if (req.file) {
         const file = req.file.filename;
@@ -124,12 +105,12 @@ app.get("/contact", (req, res) => {
     res.render("contact.ejs", { address });
 })
 
-app.get("/createblog", (req, res) => {
+app.get("/createblog", isAuthenticated, (req, res) => {
     res.render("./blog/createBlog.ejs");
 })
 
 
-app.post("/createblog", upload.single('image'), async (req, res) => {
+app.post("/createblog", isAuthenticated, upload.single('image'), async (req, res) => {
     // console.log(req.body);
     // const title = req.body.title;
     // const description = req.body.description;
@@ -138,16 +119,14 @@ app.post("/createblog", upload.single('image'), async (req, res) => {
 
     const { title, description, subtitle } = req.body;
     const file = req.file.filename;
-    console.log(file);
-
-    console.log(title, description, subtitle);
-
+    const uid = req.userId;
 
     await Blog.create({
         title,
         description,
         subtitle,
         image: file,
+        author: uid
     })
     console.log("Blog created successfully");
     res.redirect("/createblog");
@@ -174,6 +153,15 @@ app.get("/login", (req, res) => {
     res.render("./blog/login.ejs");
 })
 
+
+app.get("/logout", (req, res) => {
+    res.clearCookie("token");
+    res.redirect("/login");   
+})
+
+
+
+
 app.post("/login", async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email: email });
@@ -185,9 +173,11 @@ app.post("/login", async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             res.send("invalid password");
-
+            res.redirect("/login");
         }
         else {
+            const token = jwt.sign({ userId: user._id }, process.env.SECRET, {expiresIn: '20d'});
+            res.cookie("token", token);
             // res.send("Login success");
             res.redirect("/");
         }
