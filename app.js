@@ -42,7 +42,7 @@ app.get("/about", (req, res) => {
 
 app.get("/", async (req, res) => {
     const blogs = await Blog.find();
-    console.log(blogs);
+    // console.log(blogs);
     res.render("./blog/home.ejs", { blogs });
 })
 
@@ -55,7 +55,7 @@ app.post("/", async (req, res) => {
 app.get("/blog/:id", async (req, res) => {
     const id = req.params.id;
     const blog = await Blog.findById(id).populate("author");
-    console.log(blog)
+    console.log(blog.title,"\n",blog.author.username,blog.author.email);
     res.render("./blog/blogs.ejs", { blog });
 })
 

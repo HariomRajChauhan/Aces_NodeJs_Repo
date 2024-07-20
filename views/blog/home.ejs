@@ -9,102 +9,182 @@
     <style>
         /* General Styles */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
         }
 
-        header {
-            padding: 0 20px;
+        .main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            width: 300px;
+            margin: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .image img {
+            width: 100%;
+            height: auto;
+        }
+
+        .card h2 {
+            margin: 15px;
+        }
+
+        .card p {
+            margin: 15px;
+            color: grey;
+        }
+
+        .card a {
+            display: inline-block;
+            margin: 15px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+
+        .card a {
+            color: #007bff;
+            /* Default state */
+        }
+
+        .card a:visited {
+            color: #6610f2;
+        }
+
+        .card a:hover,
+        .card a:focus {
+            color: #0056b3;
+        }
+
+        .card a:active,
+        .card a:target {
+            color: #004380;
+        }
+
+        .card a:lang(fr) {
+            color: #6610f2;
+        }
+
+
+        .searchbar {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .searchbar form {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+
+        .searchbar input[type="search"] {
+            padding: 10px;
+            margin-right: 10px;
+            width: 300px;
+            border: 1px solid #333;
+            border-radius: 5px;
+        }
+
+        .searchbar input[type="submit"] {
+            padding: 10px 20px;
             background-color: #333;
             color: #fff;
-            padding: 20px 0;
-            text-align: center;
-            font-weight: 800;
-            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
-        nav ul {
-            list-style: none;
-            padding: 0;
+        .searchbar input[type="submit"]:hover {
+            background-color: #555;
         }
 
-        nav ul li {
-            display: inline;
-            margin: 0 10px;
+        /* Media Queries */
+        @media (max-width: 768px) {
+
+            .main,
+            .card {
+                grid-template-columns: repeat(1, 1fr);
+            }
+
+            .searchbar form,
+            .naviagtion {
+                flex-direction: column;
+            }
+
+            .searchbar input[type="search"],
+            .searchbar input[type="submit"],
+            nav ul {
+                width: 100%;
+            }
+
+            nav ul {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            nav ul li {
+                display: block;
+            }
+
+            header,
+            .card h2,
+            .card p,
+            .card a {
+                font-size: 0.8rem;
+            }
+
+            .searchbar,
+            .card {
+                padding: 5px;
+            }
+
+            .card .image img {
+                width: 100%;
+                height: auto;
+            }
+
+            .searchbar input[type="submit"]:hover {
+                background-color: #555;
+            }
+
+            .naviagtion {
+                padding: 0 10px;
+            }
         }
 
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .naviagtion {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-            gap: 30px;
-        }
-
-        .main {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            /* Correctly creates three columns of equal width */
-            grid-gap: 30px;
-            /* Adds gap between grid items */
-            background-color: #fff;
-            margin: 20px auto;
-            padding: 20px;
-            width: 100%;
-            max-width: 100%;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Main Content Styles */
-        .card {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            /* Creates two columns of equal width */
-            grid-gap: 20px;
-            /* Adds gap between grid items */
-            background-color: #fff;
-            margin: 20px auto;
-            padding: 10px;
-            width: 100%;
-            max-width: 350px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .card .image img {
-            max-width: 100%;
-            height: auto;
+        @media (max-width: 500px) {
+            .main {
+                grid-template-columns: repeat(1, 1fr);
+            }
         }
     </style>
 </head>
 
 <body>
-    <header>
-        <div class="naviagtion">
-            <div>
-                <h2>Hariom</h2>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/">Blogs</a></li>
-                    <li><a href="createBlog">Create Blog</a></li>
-                    <li><a href="/logout" style="background-color: red; color: white; padding: 8px;">Logout</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <%- include('../partials/nav.ejs') %>
+
     <div class="searchbar">
         <form action="/" method="post">
 
             <input type="search" name="search" placeholder="Search Blogs">
-            <input type="submit"/ >
+            <input type="submit" />
         </form>
     </div>
     <div class="main">
@@ -113,7 +193,7 @@
                 <div class="image">
                     <img src="<%-blogs.image%>" alt="profile image">
                 </div>
-                <h1><%-blogs.title%></h1>
+                <h2><%- blogs.title %></h2>
                 <p style="display: block;"><%-blogs.subtitle%></p>
                 <p><a href="/blog/<%- blogs._id %>">See More...</a></p>
             </div>

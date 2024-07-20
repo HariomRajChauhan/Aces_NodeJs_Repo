@@ -8,43 +8,6 @@
 
 
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-
-        header {
-            padding:0 20px;
-            background-color: #333;
-            color: #fff;
-            padding: 20px 0;
-            text-align: center;
-        }
-
-        nav ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        nav ul li {
-            display: inline;
-            margin: 0 10px;
-        }
-
-        nav ul li a {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .naviagtion {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 20px;
-        }
-
         .main {
             padding: 20px;
             width: 100%;
@@ -58,6 +21,7 @@
             /* Add rounded corners */
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             /* Add subtle shadow */
+            margin-top: 70px !important;
         }
 
         .main>div:first-child h1 {
@@ -128,20 +92,7 @@
 </head>
 
 <body>
-    <header>
-        <div class="naviagtion">
-            <div>
-                <h2>Hariom</h2>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/">Blogs</a></li>
-                    <li><a href="createBlog">Create Blog</a></li>
-                </ul>
-            </nav>
-        </div>
-    </header>
+    <%- include('../partials/nav') %>
 
     <div class="main">
         <div>
